@@ -1,7 +1,7 @@
 XLRemoteImageView
 =================
 
-Objective-c categories that show a progress indicator while the image is loading from server. It uses the same NSCache and NSOperation object used in UIImageView+AFNetworking category. It looks like the Instagram loading indicator. It has been tested on ios 5 & 6.
+UIImageView categories that show a progress indicator while the image is being downloaded. It uses the same NSCache and NSOperation objects used in UIImageView+AFNetworking category. It looks like Instagram loading indicator. It has been tested on ios 5 & 6.
 
 Installation
 --------
