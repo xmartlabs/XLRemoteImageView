@@ -59,7 +59,6 @@
 #pragma mark - example
 
 - (IBAction)refreshImage:(UIBarButtonItem *)sender {
-    [self.imageView setImage:nil];
     // use another url to prevent cache usage
     NSString * url = [NSString stringWithFormat:@"http://xmartlabs.com/images/martin.jpg?countRefresh=%i", self.countRefresh];
     self.countRefresh += 1;
