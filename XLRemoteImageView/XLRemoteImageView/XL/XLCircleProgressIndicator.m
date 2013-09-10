@@ -29,10 +29,10 @@
 }
 
 -(void)setDefaultValues {
-    self.backgroundColor        = [UIColor clearColor];
-    self.strokeProgressColor    = kXLCircleProgressIndicatorDefaultStrokeProgressColor;
-    self.strokeRemainingColor   = kXLCircleProgressIndicatorDefaultStrokeRemainingColor;
-    self.strokeWidthRatio       = kXLCircleProgressIndicatorDefaultStrokeWidthRatio;
+    self.backgroundColor    = [UIColor clearColor];
+    _strokeProgressColor    = kXLCircleProgressIndicatorDefaultStrokeProgressColor;
+    _strokeRemainingColor   = kXLCircleProgressIndicatorDefaultStrokeRemainingColor;
+    _strokeWidthRatio       = kXLCircleProgressIndicatorDefaultStrokeWidthRatio;
 }
 
 
