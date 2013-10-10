@@ -32,4 +32,9 @@
  */
 @property (nonatomic) CGFloat strokeWidth UI_APPEARANCE_SELECTOR;
 
+/**
+ Configure size of CircleProgressIndicator by default 100 */
+
+@property (nonatomic) CGFloat minimumSize UI_APPEARANCE_SELECTOR;
+
 @end

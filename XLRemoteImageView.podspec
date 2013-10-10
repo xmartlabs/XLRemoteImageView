@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'XLRemoteImageView'
-  s.version  = '1.0.0'
+  s.version  = '1.0.1'
   s.license  = 'MIT'
   s.summary  = 'UIImageView categories that show a progress indicator while the image is being downloaded.'
   s.description = <<-DESC 
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
                   DESC
   s.homepage = 'https://github.com/xmartlabs/XLRemoteImageView'
   s.authors  = { 'Martin Barreto' => 'martin@xmartlabs.com' }
-  s.source   = { :git => 'https://github.com/xmartlabs/XLRemoteImageView.git', :tag => 'v1.0.0'}
+  s.source   = { :git => 'https://github.com/TheSooth/XLRemoteImageView.git', :tag => 'v1.0.1'}
   s.source_files = 'XLRemoteImageView/XLRemoteImageView/XL/*.{h,m}'
   s.requires_arc = true
   s.dependency 'AFNetworking', '~> 1.3.2'

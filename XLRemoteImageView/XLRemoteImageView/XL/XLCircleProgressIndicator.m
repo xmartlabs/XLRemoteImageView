@@ -1,12 +1,13 @@
 /**
-/ Source based on https://github.com/swissmanu/MACircleProgressIndicator
-*/
+ / Source based on https://github.com/swissmanu/MACircleProgressIndicator
+ */
 
 #import "XLCircleProgressIndicator.h"
 
 #define kXLCircleProgressIndicatorDefaultStrokeProgressColor      [UIColor redColor]
 #define kXLCircleProgressIndicatorDefaultStrokeRemainingColor     [[UIColor redColor] colorWithAlphaComponent:0.1f]
 #define kXLCircleProgressIndicatorDefaultStrokeWidthRatio         0.10
+#define kXLCircleProgressIndicatorDefaultSize 100.f
 
 @interface XLCircleProgressIndicator ()
 @end
@@ -18,6 +19,7 @@
 @synthesize strokeRemainingColor = _strokeRemainingColor;
 @synthesize strokeWidthRatio     = _strokeWidthRatio;
 @synthesize progressValue        = _progressValue;
+@synthesize minimumSize          = _minimumSize;
 
 
 -(id)initWithFrame:(CGRect)frame {
@@ -33,6 +35,7 @@
     _strokeProgressColor    = kXLCircleProgressIndicatorDefaultStrokeProgressColor;
     _strokeRemainingColor   = kXLCircleProgressIndicatorDefaultStrokeRemainingColor;
     _strokeWidthRatio       = kXLCircleProgressIndicatorDefaultStrokeWidthRatio;
+    _minimumSize            = kXLCircleProgressIndicatorDefaultSize;
 }
 
 
@@ -67,13 +70,20 @@
     [self setNeedsDisplay];
 }
 
+- (void)setMinimumSize:(CGFloat)minimumSize
+{
+    _minimumSize = minimumSize;
+    
+    [self setNeedsDisplay];
+}
+
 
 #pragma mark - draw progress indicator view
 
 -(void)drawRect:(CGRect)rect {
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
-    float minSize =  MIN(rect.size.width, rect.size.height);
+    float minSize =  MIN(self.minimumSize, CGRectGetHeight(self.bounds));
     float lineWidth = _strokeWidth;
     if(lineWidth == -1.0) lineWidth = minSize * _strokeWidthRatio;
     float radius = (minSize - lineWidth) / 2.0;

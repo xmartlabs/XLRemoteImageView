@@ -42,8 +42,7 @@ static char kXLImageProgressIndicatorKey;
 {
     XLCircleProgressIndicator * progressIndicator = (XLCircleProgressIndicator *)objc_getAssociatedObject(self, &kXLImageProgressIndicatorKey);
     if (progressIndicator) return progressIndicator;
-    CGRect frame = CGRectMake(0, 0, MIN(100, self.bounds.size.width), MIN(100, self.bounds.size.height));
-    progressIndicator = [[XLCircleProgressIndicator alloc] initWithFrame:frame];
+    progressIndicator = [[XLCircleProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
     progressIndicator.center = self.center;
     progressIndicator.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
     [self xl_setProgressIndicatorView:progressIndicator];
@@ -56,21 +55,37 @@ static char kXLImageProgressIndicatorKey;
     [self setImageWithProgressIndicatorAndURL:url placeholderImage:nil];
 }
 
+-(void)setImageWithProgressIndicatorAndURL:(NSURL *)url indicatorCenter:(CGPoint)indicatorCenter
+{
+    [self setImageWithProgressIndicatorAndURL:url placeholderImage:Nil imageDidAppearBlock:nil progressIndicatorCenterPoint:indicatorCenter];
+}
+
 -(void)setImageWithProgressIndicatorAndURL:(NSURL *)url
                           placeholderImage:(UIImage *)placeholderImage
 {
-    [self setImageWithProgressIndicatorAndURL:url placeholderImage:placeholderImage imageDidAppearBlock:nil];
+    [self setImageWithProgressIndicatorAndURL:url placeholderImage:placeholderImage imageDidAppearBlock:nil progressIndicatorCenterPoint:self.center];
+}
+
+- (void)setImageWithProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage
+                        imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
+{
+    [self setImageWithProgressIndicatorAndURL:url
+                             placeholderImage:placeholderImage
+                          imageDidAppearBlock:imageDidAppearBlock
+                 progressIndicatorCenterPoint:self.center];
 }
 
 -(void)setImageWithProgressIndicatorAndURL:(NSURL *)url
                           placeholderImage:(UIImage *)placeholderImage
                        imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
+              progressIndicatorCenterPoint:(CGPoint)indicatorCenter
 {
     [self setImage:nil];
     [self.xl_progressIndicatorView setProgressValue:0.0f];
     if (![self.xl_progressIndicatorView superview]){
         [self addSubview:self.xl_progressIndicatorView];
     }
+    self.xl_progressIndicatorView.center = indicatorCenter;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     __typeof__(self) __weak weakSelf = self;
