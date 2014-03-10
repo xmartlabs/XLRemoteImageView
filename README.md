@@ -56,7 +56,7 @@ The above methods use UIImageView+XLNetworking category, that let you know the i
 ```
 
 
-![Screenshot](https://raw.github.com/mtnbarreto/XLRemoteImageView/master/screenshot.png)
+![Screenshot](https://raw.github.com/xmartlabs/XLRemoteImageView/master/screenshot.png)
 
 
 Appearance customization
