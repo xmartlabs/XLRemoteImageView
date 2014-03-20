@@ -41,7 +41,8 @@
     // get AFNetworking UIImageView cache
     NSCache * cache =  (NSCache *)objc_msgSend([self class], @selector(af_sharedImageCache));
     // try to get the image from cache
-    UIImage * cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
+    UIImage * cachedImage = [cache performSelector:@selector(cachedImageForRequest:) withObject:urlRequest];
+//    UIImage* cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
     if (cachedImage) {
         self.af_imageRequestOperation = nil;
         
@@ -74,7 +75,8 @@
                 }
             }
             // cache the image recently fetched.
-            objc_msgSend(cache, @selector(cacheImage:forRequest:), responseObject, urlRequest);            
+            objc_msgSend(cache, @selector(cacheImage:forRequest:), responseObject, urlRequest);
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if ([urlRequest isEqual:[self.af_imageRequestOperation request]]) {
                 if (self.af_imageRequestOperation == operation) {
