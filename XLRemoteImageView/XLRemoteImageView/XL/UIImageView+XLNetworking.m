@@ -12,6 +12,12 @@
 #import <objc/message.h>
 
 
+@interface AFImageCache : NSCache
+- (UIImage *)cachedImageForRequest:(NSURLRequest *)request;
+- (void)cacheImage:(UIImage *)image
+        forRequest:(NSURLRequest *)request;
+@end
+
 @interface UIImageView (_XLNetworking)
 
 @property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFImageRequestOperation *af_imageRequestOperation;
@@ -39,9 +45,10 @@
 {
     [self cancelImageRequestOperation];
     // get AFNetworking UIImageView cache
-    NSCache * cache =  (NSCache *)objc_msgSend([self class], @selector(af_sharedImageCache));
+    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(af_sharedImageCache));
     // try to get the image from cache
-    UIImage * cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
+    UIImage * cachedImage = [cache cachedImageForRequest:urlRequest];
+//    UIImage* cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
     if (cachedImage) {
         self.af_imageRequestOperation = nil;
         
@@ -74,7 +81,9 @@
                 }
             }
             // cache the image recently fetched.
-            objc_msgSend(cache, @selector(cacheImage:forRequest:), responseObject, urlRequest);            
+            [cache cacheImage:responseObject forRequest:urlRequest];
+//            objc_msgSend(cache, @selector(cacheImage:forRequest:), responseObject, urlRequest);
+
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
             if ([urlRequest isEqual:[self.af_imageRequestOperation request]]) {
                 if (self.af_imageRequestOperation == operation) {

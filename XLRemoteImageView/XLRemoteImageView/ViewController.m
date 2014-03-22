@@ -61,7 +61,7 @@
 
 - (IBAction)refreshImage:(UIBarButtonItem *)sender {
     // use another url to prevent cache usage
-    NSString * url = [NSString stringWithFormat:@"http://raw.github.com/mtnbarreto/XLRemoteImageView/master/screenshot.png?countRefresh=%i", self.countRefresh];
+    NSString * url = [NSString stringWithFormat:@"https://raw.githubusercontent.com/xmartlabs/XLRemoteImageView/master/screenshot.png?countRefresh=%i", self.countRefresh];
     self.countRefresh += 1;
     
     [self.imageView setImageWithProgressIndicatorAndURL:[NSURL URLWithString:url]];
