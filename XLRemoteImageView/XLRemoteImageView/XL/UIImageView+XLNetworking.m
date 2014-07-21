@@ -8,6 +8,7 @@
 
 #import "UIImageView+XLNetworking.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "XLCircleProgressIndicator.h"
 #import <objc/message.h>
 
@@ -20,7 +21,7 @@
 
 @interface UIImageView (_XLNetworking)
 
-@property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFImageRequestOperation *af_imageRequestOperation;
+@property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFHTTPRequestOperation *af_imageRequestOperation;
 
 @end
 
@@ -45,7 +46,7 @@
 {
     [self cancelImageRequestOperation];
     // get AFNetworking UIImageView cache
-    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(af_sharedImageCache));
+    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(sharedImageCache));
     // try to get the image from cache
     UIImage * cachedImage = [cache cachedImageForRequest:urlRequest];
 //    UIImage* cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
@@ -62,7 +63,7 @@
             self.image = placeholderImage;
         }
         
-        AFImageRequestOperation *requestOperation = [[AFImageRequestOperation alloc] initWithRequest:urlRequest];
+        AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
 		
 #ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
 		requestOperation.allowsInvalidSSLCertificate = YES;
