@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/xmartlabs/XLRemoteImageView.git', :tag => 'v1.0.0' }
   s.source_files = 'XLRemoteImageView/XLRemoteImageView/XL/*.{h,m}'
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~> 1.3.2'
-  s.ios.deployment_target = '5.0'
+  s.dependency 'AFNetworking'
+  s.ios.deployment_target = '7.0'
   s.ios.frameworks = 'UIKit', 'Foundation'
 end
