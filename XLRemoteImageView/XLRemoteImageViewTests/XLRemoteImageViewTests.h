@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Xmartlabs. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface XLRemoteImageViewTests : SenTestCase
+@interface XLRemoteImageViewTests : XCTestCase
 
 @end

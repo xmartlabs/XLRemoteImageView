@@ -6,8 +6,9 @@
 
 #define kXLCircleProgressIndicatorDefaultStrokeProgressColor      [UIColor redColor]
 #define kXLCircleProgressIndicatorDefaultStrokeRemainingColor     [[UIColor redColor] colorWithAlphaComponent:0.1f]
-#define kXLCircleProgressIndicatorDefaultStrokeWidthRatio         0.10
+#define kXLCircleProgressIndicatorDefaultStrokeWidthRatio         0.05
 #define kXLCircleProgressIndicatorDefaultSize 100.f
+#define kXLCircleProgressIndicatorDefaultStrokeWidth              -1.0
 
 @interface XLCircleProgressIndicator ()
 @end
@@ -36,6 +37,7 @@
     _strokeRemainingColor   = kXLCircleProgressIndicatorDefaultStrokeRemainingColor;
     _strokeWidthRatio       = kXLCircleProgressIndicatorDefaultStrokeWidthRatio;
     _minimumSize            = kXLCircleProgressIndicatorDefaultSize;
+    _strokeWidth            = kXLCircleProgressIndicatorDefaultStrokeWidth;
 }
 
 
@@ -73,10 +75,8 @@
 - (void)setMinimumSize:(CGFloat)minimumSize
 {
     _minimumSize = minimumSize;
-    
     [self setNeedsDisplay];
 }
-
 
 #pragma mark - draw progress indicator view
 
@@ -85,7 +85,7 @@
     CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
     float minSize =  MIN(self.minimumSize, CGRectGetHeight(self.bounds));
     float lineWidth = _strokeWidth;
-    if(lineWidth == -1.0) lineWidth = minSize * _strokeWidthRatio;
+    if (lineWidth == -1.0) lineWidth = minSize * _strokeWidthRatio;
     float radius = (minSize - lineWidth) / 2.0;
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, center.x, center.y);
