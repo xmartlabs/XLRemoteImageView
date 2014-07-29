@@ -97,8 +97,11 @@
         if (downloadProgressBlock){
             [self.af_imageRequestOperation setDownloadProgressBlock:downloadProgressBlock];
         }
-        // get the NSOperation associated to UIImageViewClass
+        // get the NSoperationQueue associated With UIImageView class
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wundeclared-selector"
         NSOperationQueue * operationQueue =  (NSOperationQueue *)objc_msgSend([self class], @selector(af_sharedImageRequestOperationQueue));
+        #pragma clang diagnostic pop
         [operationQueue addOperation:self.af_imageRequestOperation];
     }
 }

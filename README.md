@@ -1,7 +1,12 @@
 XLRemoteImageView
 =================
 
-UIImageView categories that show a progress indicator while the image is being downloaded. It uses the same NSCache and NSOperation objects used in UIImageView+AFNetworking category. It looks like Instagram loading indicator. It has been tested on ios 5 & 6.
+By [XMARTLABS](http://xmartlabs.com).
+
+Purpose
+--------------
+
+UIImageView categories that show a progress indicator while the image is being downloaded. It uses the same NSCache and NSOperation objects used in UIImageView+AFNetworking category. It looks like Instagram loading indicator.
 
 Installation
 --------
@@ -10,11 +15,11 @@ The easiest way to integrate XLRemoteImageView in your projects is via [CocoaPod
 
 1. Add the following line in the project's Podfile file.
 
-`pod 'XLRemoteImageView'`
+`pod 'XLRemoteImageView', '~> 2.0'`
 
 2. Run the command `pod install` from the Podfile folder directory.
 
-You can also install XLRemoteImage manually. We don't recommend this approach.
+You can also install XLRemoteImageView manually. We don't recommend this approach.
 The source files you will need are in XLRemoteImageView/XLRemoteImageView/XL folder. 
 
 
@@ -91,6 +96,29 @@ XLRemoteImageView files
 License
 --------
 XLRemoteImageView is distributed under MIT license, please feel free to use it and contribute.
+
+Requirements
+-----------------------------
+
+* ARC
+* iOS 7.0 and above
+
+Release Notes
+--------------
+
+Version 2.0.0 (cocoaPod)
+
+* Supports AFNetworking ~> 2.0.
+* Bug fixes.
+* Tested on iOS 7 & 7.1.
+
+Version 1.0.0 (cocoaPod)
+
+* Initial release.
+* Tested on ios 5 & 6.
+* AFNetworking ~> 1.3 support. 
+
+
 
 Contact
 --------
