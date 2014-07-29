@@ -17,7 +17,6 @@
 		28C702A517D4E4B500C8507E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 28C702A417D4E4B500C8507E /* Default-568h@2x.png */; };
 		28C702A817D4E4B500C8507E /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28C702A617D4E4B500C8507E /* MainStoryboard.storyboard */; };
 		28C702AB17D4E4B500C8507E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C702AA17D4E4B500C8507E /* ViewController.m */; };
-		28C702B317D4E4B500C8507E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C702B217D4E4B500C8507E /* SenTestingKit.framework */; };
 		28C702B417D4E4B500C8507E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C7028E17D4E4B500C8507E /* UIKit.framework */; };
 		28C702B517D4E4B500C8507E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28C7029017D4E4B500C8507E /* Foundation.framework */; };
 		28C702BD17D4E4B500C8507E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28C702BB17D4E4B500C8507E /* InfoPlist.strings */; };
@@ -54,8 +53,7 @@
 		28C702A717D4E4B500C8507E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		28C702A917D4E4B500C8507E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		28C702AA17D4E4B500C8507E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLRemoteImageViewTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		28C702B217D4E4B500C8507E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XLRemoteImageViewTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		28C702BA17D4E4B500C8507E /* XLRemoteImageViewTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XLRemoteImageViewTests-Info.plist"; sourceTree = "<group>"; };
 		28C702BC17D4E4B500C8507E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		28C702BE17D4E4B500C8507E /* XLRemoteImageViewTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XLRemoteImageViewTests.h; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				28C702B317D4E4B500C8507E /* SenTestingKit.framework in Frameworks */,
 				28C702B417D4E4B500C8507E /* UIKit.framework in Frameworks */,
 				28C702B517D4E4B500C8507E /* Foundation.framework in Frameworks */,
 			);
@@ -109,7 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				28C7028B17D4E4B500C8507E /* XLRemoteImageView.app */,
-				28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.octest */,
+				28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,7 +116,6 @@
 			children = (
 				28C7028E17D4E4B500C8507E /* UIKit.framework */,
 				28C7029017D4E4B500C8507E /* Foundation.framework */,
-				28C702B217D4E4B500C8507E /* SenTestingKit.framework */,
 				A21E9A23DFAC48938AB408DD /* libPods.a */,
 			);
 			name = Frameworks;
@@ -223,8 +219,8 @@
 			);
 			name = XLRemoteImageViewTests;
 			productName = XLRemoteImageViewTests;
-			productReference = 28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productReference = 28C702B117D4E4B500C8507E /* XLRemoteImageViewTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -232,6 +228,7 @@
 		28C7028317D4E4B500C8507E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastTestingUpgradeCheck = 0510;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Xmartlabs;
 			};
@@ -469,13 +466,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XLRemoteImageView/XLRemoteImageView-Prefix.pch";
 				INFOPLIST_FILE = "XLRemoteImageViewTests/XLRemoteImageViewTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -486,13 +483,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XLRemoteImageView/XLRemoteImageView-Prefix.pch";
 				INFOPLIST_FILE = "XLRemoteImageViewTests/XLRemoteImageViewTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

@@ -13,7 +13,7 @@
 @interface ViewController ()
 
 @property (nonatomic) UIImageView *imageView;
-@property NSUInteger countRefresh;
+@property int countRefresh;
 
 @end
 
