@@ -10,10 +10,13 @@
 #import "UIImageView+XLNetworking.h"
 #import "UIImageView+XLProgressIndicator.h"
 
+#import <AFNetworking/UIImageView+AFNetworking.h>
+
 @interface ViewController ()
 
 @property (nonatomic) UIImageView *imageView;
 @property int countRefresh;
+
 
 @end
 
@@ -33,6 +36,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.view setBackgroundColor: [UIColor whiteColor]];
     [self.view addSubview:self.imageView];
     [self refreshImage:nil];
 }
@@ -48,10 +52,10 @@
 
 -(UIImageView *)imageView{
     if (_imageView) return _imageView;
-    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 300.0)];
-    [_imageView setBackgroundColor:[UIColor grayColor]];
+    _imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 320)];
+    [_imageView setBackgroundColor:[UIColor colorWithRed:0.84 green:0.85 blue:0.86 alpha:0.9f]];
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.clipsToBounds = YES;
     return _imageView;
 }

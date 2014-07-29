@@ -6,8 +6,8 @@
 
 #define kXLCircleProgressIndicatorDefaultStrokeProgressColor      [UIColor redColor]
 #define kXLCircleProgressIndicatorDefaultStrokeRemainingColor     [[UIColor redColor] colorWithAlphaComponent:0.1f]
-#define kXLCircleProgressIndicatorDefaultStrokeWidthRatio         0.05
-#define kXLCircleProgressIndicatorDefaultSize 100.f
+#define kXLCircleProgressIndicatorDefaultStrokeWidthRatio         0.1
+#define kXLCircleProgressIndicatorDefaultSize                     80.f
 #define kXLCircleProgressIndicatorDefaultStrokeWidth              -1.0
 
 @interface XLCircleProgressIndicator ()
