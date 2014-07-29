@@ -8,6 +8,7 @@
 
 #import "UIImageView+XLNetworking.h"
 #import <AFNetworking/AFNetworking.h>
+#import <AFNetworking/UIImageView+AFNetworking.h>
 #import "XLCircleProgressIndicator.h"
 #import <objc/message.h>
 
@@ -20,7 +21,7 @@
 
 @interface UIImageView (_XLNetworking)
 
-@property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFImageRequestOperation *af_imageRequestOperation;
+@property (readwrite, nonatomic, strong, setter = af_setImageRequestOperation:) AFHTTPRequestOperation *af_imageRequestOperation;
 
 @end
 
@@ -44,62 +45,58 @@
 
 {
     [self cancelImageRequestOperation];
+    
     // get AFNetworking UIImageView cache
-    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(af_sharedImageCache));
+    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(sharedImageCache));
     // try to get the image from cache
     UIImage * cachedImage = [cache cachedImageForRequest:urlRequest];
-//    UIImage* cachedImage = objc_msgSend(cache, @selector(cachedImageForRequest:), urlRequest);
     if (cachedImage) {
-        self.af_imageRequestOperation = nil;
-        
         if (success) {
             success(nil, nil, cachedImage);
         } else {
             self.image = cachedImage;
         }
+        
+        self.af_imageRequestOperation = nil;
     } else {
         if (placeholderImage) {
             self.image = placeholderImage;
         }
         
-        AFImageRequestOperation *requestOperation = [[AFImageRequestOperation alloc] initWithRequest:urlRequest];
-		
-#ifdef _AFNETWORKING_ALLOW_INVALID_SSL_CERTIFICATES_
-		requestOperation.allowsInvalidSSLCertificate = YES;
-#endif
-		
-        [requestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            if ([urlRequest isEqual:[self.af_imageRequestOperation request]]) {
-                if (self.af_imageRequestOperation == operation) {
-                    self.af_imageRequestOperation = nil;
+        __weak __typeof(self) weakSelf = self;
+        self.af_imageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
+        self.af_imageRequestOperation.responseSerializer = self.imageResponseSerializer;
+        [self.af_imageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
+                if (success) {
+                    success(urlRequest, operation.response, responseObject);
+                } else if (responseObject) {
+                    strongSelf.image = responseObject;
                 }
                 
-                if (success) {
-                    success(operation.request, operation.response, responseObject);
-                } else if (responseObject) {
-                    self.image = responseObject;
+                if (operation == strongSelf.af_imageRequestOperation){
+                    strongSelf.af_imageRequestOperation = nil;
                 }
             }
             // cache the image recently fetched.
             [cache cacheImage:responseObject forRequest:urlRequest];
-//            objc_msgSend(cache, @selector(cacheImage:forRequest:), responseObject, urlRequest);
-
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            if ([urlRequest isEqual:[self.af_imageRequestOperation request]]) {
-                if (self.af_imageRequestOperation == operation) {
-                    self.af_imageRequestOperation = nil;
+            __strong __typeof(weakSelf)strongSelf = weakSelf;
+            if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
+                if (failure) {
+                    failure(urlRequest, operation.response, error);
                 }
                 
-                if (failure) {
-                    failure(operation.request, operation.response, error);
+                if (operation == strongSelf.af_imageRequestOperation){
+                    strongSelf.af_imageRequestOperation = nil;
                 }
             }
         }];
         
         if (downloadProgressBlock){
-            [requestOperation setDownloadProgressBlock:downloadProgressBlock];
+            [self.af_imageRequestOperation setDownloadProgressBlock:downloadProgressBlock];
         }
-        self.af_imageRequestOperation = requestOperation;
         // get the NSOperation associated to UIImageViewClass
         NSOperationQueue * operationQueue =  (NSOperationQueue *)objc_msgSend([self class], @selector(af_sharedImageRequestOperationQueue));
         [operationQueue addOperation:self.af_imageRequestOperation];
