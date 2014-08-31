@@ -22,6 +22,8 @@
 		28C702CE17D5330D00C8507E /* XLCircleProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C702CB17D5330D00C8507E /* XLCircleProgressIndicator.m */; };
 		28C702D817D6465A00C8507E /* UIImageView+XLNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C702D717D6465A00C8507E /* UIImageView+XLNetworking.m */; };
 		28C702DB17D7728100C8507E /* UIImageView+XLProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 28C702DA17D7728000C8507E /* UIImageView+XLProgressIndicator.m */; };
+		74AE6E3F19B3D8D500C6F4AC /* UIButton+XLNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 74AE6E3C19B3D8D500C6F4AC /* UIButton+XLNetworking.m */; };
+		74AE6E4019B3D8D500C6F4AC /* UIButton+XLProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 74AE6E3E19B3D8D500C6F4AC /* UIButton+XLProgressIndicator.m */; };
 		F867C11010694CB4B3D451A6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A21E9A23DFAC48938AB408DD /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -61,6 +63,10 @@
 		28C702D917D7728000C8507E /* UIImageView+XLProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImageView+XLProgressIndicator.h"; path = "XL/UIImageView+XLProgressIndicator.h"; sourceTree = "<group>"; };
 		28C702DA17D7728000C8507E /* UIImageView+XLProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+XLProgressIndicator.m"; path = "XL/UIImageView+XLProgressIndicator.m"; sourceTree = "<group>"; };
 		6337B355AF95496BB2E86667 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		74AE6E3B19B3D8D500C6F4AC /* UIButton+XLNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+XLNetworking.h"; path = "XL/UIButton+XLNetworking.h"; sourceTree = "<group>"; };
+		74AE6E3C19B3D8D500C6F4AC /* UIButton+XLNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+XLNetworking.m"; path = "XL/UIButton+XLNetworking.m"; sourceTree = "<group>"; };
+		74AE6E3D19B3D8D500C6F4AC /* UIButton+XLProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIButton+XLProgressIndicator.h"; path = "XL/UIButton+XLProgressIndicator.h"; sourceTree = "<group>"; };
+		74AE6E3E19B3D8D500C6F4AC /* UIButton+XLProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIButton+XLProgressIndicator.m"; path = "XL/UIButton+XLProgressIndicator.m"; sourceTree = "<group>"; };
 		A21E9A23DFAC48938AB408DD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,6 +177,10 @@
 				28C702D717D6465A00C8507E /* UIImageView+XLNetworking.m */,
 				28C702D917D7728000C8507E /* UIImageView+XLProgressIndicator.h */,
 				28C702DA17D7728000C8507E /* UIImageView+XLProgressIndicator.m */,
+				74AE6E3B19B3D8D500C6F4AC /* UIButton+XLNetworking.h */,
+				74AE6E3C19B3D8D500C6F4AC /* UIButton+XLNetworking.m */,
+				74AE6E3D19B3D8D500C6F4AC /* UIButton+XLProgressIndicator.h */,
+				74AE6E3E19B3D8D500C6F4AC /* UIButton+XLProgressIndicator.m */,
 			);
 			name = XL;
 			sourceTree = "<group>";
@@ -317,8 +327,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				28C7029B17D4E4B500C8507E /* main.m in Sources */,
+				74AE6E3F19B3D8D500C6F4AC /* UIButton+XLNetworking.m in Sources */,
 				28C7029F17D4E4B500C8507E /* AppDelegate.m in Sources */,
 				28C702AB17D4E4B500C8507E /* ViewController.m in Sources */,
+				74AE6E4019B3D8D500C6F4AC /* UIButton+XLProgressIndicator.m in Sources */,
 				28C702CE17D5330D00C8507E /* XLCircleProgressIndicator.m in Sources */,
 				28C702D817D6465A00C8507E /* UIImageView+XLNetworking.m in Sources */,
 				28C702DB17D7728100C8507E /* UIImageView+XLProgressIndicator.m in Sources */,
