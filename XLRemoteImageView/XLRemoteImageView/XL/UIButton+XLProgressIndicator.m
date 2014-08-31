@@ -51,31 +51,36 @@ static char kXLImageProgressIndicatorKey;
 }
 
 
--(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url
+-(void)setImageWithProgressIndicatorForState:(UIControlState)state withURL:(NSURL *)url
 {
-    [self setImageForState:state withProgressIndicatorAndURL:url placeholderImage:nil];
+    [self setImageWithProgressIndicatorForState:state withURL:url placeholderImage:nil];
 }
 
--(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url indicatorCenter:(CGPoint)indicatorCenter
+-(void)setImageWithProgressIndicatorForState:(UIControlState)state withURL:(NSURL *)url indicatorCenter:(CGPoint)indicatorCenter
 {
-    [self setImageForState:state withProgressIndicatorAndURL:url placeholderImage:Nil imageDidAppearBlock:nil progressIndicatorCenterPoint:indicatorCenter];
+    [self setImageWithProgressIndicatorForState:state withURL:url placeholderImage:Nil imageDidAppearBlock:nil progressIndicatorCenterPoint:indicatorCenter];
 }
 
--(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage
+-(void)setImageWithProgressIndicatorForState:(UIControlState)state withURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage
 {
-    [self setImageForState:state withProgressIndicatorAndURL:url placeholderImage:placeholderImage imageDidAppearBlock:nil progressIndicatorCenterPoint:self.center];
+    [self setImageWithProgressIndicatorForState:state withURL:url placeholderImage:placeholderImage imageDidAppearBlock:nil progressIndicatorCenterPoint:self.center];
 }
 
-- (void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage imageDidAppearBlock:(void (^)(UIButton *))imageDidAppearBlock
+- (void)setImageWithProgressIndicatorForState:(UIControlState)state withURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage
+                          imageDidAppearBlock:(void (^)(UIButton *))imageDidAppearBlock
 {
-    [self setImageForState:state
-      withProgressIndicatorAndURL:url
-                 placeholderImage:placeholderImage
-              imageDidAppearBlock:imageDidAppearBlock
-     progressIndicatorCenterPoint:CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2)];
+    [self setImageWithProgressIndicatorForState:state
+                                        withURL:url
+                               placeholderImage:placeholderImage
+                            imageDidAppearBlock:imageDidAppearBlock
+                   progressIndicatorCenterPoint:CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2)];
 }
 
--(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage imageDidAppearBlock:(void (^)(UIButton *))imageDidAppearBlock progressIndicatorCenterPoint:(CGPoint)indicatorCenter
+-(void)setImageWithProgressIndicatorForState:(UIControlState)state
+                                     withURL:(NSURL *)url
+                            placeholderImage:(UIImage *)placeholderImage
+                         imageDidAppearBlock:(void (^)(UIButton *))imageDidAppearBlock
+                progressIndicatorCenterPoint:(CGPoint)indicatorCenter
 {
     [self setImage:nil forState:state];
     [self.xl_progressIndicatorView setProgressValue:0.0f];

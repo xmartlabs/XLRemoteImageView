@@ -86,7 +86,7 @@
     self.countRefresh += 1;
     
     [self.imageView setImageWithProgressIndicatorAndURL:[NSURL URLWithString:url]];
-//    [self.button setImageForState:UIControlStateNormal withProgressIndicatorAndURL:[NSURL URLWithString:url]];
+//    [self.button setImageWithProgressIndicatorForState:UIControlStateNormal withURL:[NSURL URLWithString:url]];
 }
 
 
