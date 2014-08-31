@@ -56,7 +56,7 @@
  @param placeholderImage The image to be set initially, until the image request finishes. If `nil`, the image view will not change its image until the image request finishes.
  @param imageDidAppearBlock A block to be executed when the image download finishes successfully, This block has no return value and takes one arguments: the UIButton loaded. For example, you can use this parameter for show a play button after the download  finishes.
  */
--(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage imageDidAppearBlock:(void(^)(UIButton * imageView))imageDidAppearBlock;
+-(void)setImageForState:(UIControlState)state withProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage imageDidAppearBlock:(void(^)(UIButton * button))imageDidAppearBlock;
 
 /**
  Creates and enqueues an image request operation, which asynchronously downloads the image from the specified URL. Any previous image request for the receiver will be cancelled. If the image is cached locally, the image is set immediately, otherwise the specified placeholder image will be set immediately, and then the remote image will be set once the request is finished. A progress indicator will appear if the image has to be fetched from a server.
