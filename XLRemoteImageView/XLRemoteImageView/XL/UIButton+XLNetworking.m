@@ -46,7 +46,7 @@
    downloadProgressBlock:(void (^)(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead))downloadProgressBlock
 
 {
-    [self cancelImageRequestOperation];
+    [self cancelImageRequestOperationForState:state];
     
     if (placeholderImage) {
         [self setImage:placeholderImage forState:state];
