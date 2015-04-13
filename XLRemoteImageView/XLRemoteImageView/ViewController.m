@@ -9,12 +9,16 @@
 #import "ViewController.h"
 #import "UIImageView+XLNetworking.h"
 #import "UIImageView+XLProgressIndicator.h"
+#import "UIButton+XLNetworking.h"
+#import "UIButton+XLProgressIndicator.h"
 
 #import <AFNetworking/UIImageView+AFNetworking.h>
+#import <AFNetworking/UIButton+AFNetworking.h>
 
 @interface ViewController ()
 
 @property (nonatomic) UIImageView *imageView;
+@property (nonatomic) UIButton *button;
 @property int countRefresh;
 
 
@@ -23,14 +27,15 @@
 @implementation ViewController
 
 @synthesize imageView = _imageView;
+@synthesize button = _button;
 @synthesize countRefresh = _countRefresh;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-
+    // Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -38,6 +43,7 @@
     [super viewWillAppear:animated];
     [self.view setBackgroundColor: [UIColor whiteColor]];
     [self.view addSubview:self.imageView];
+//    [self.view addSubview:self.button];
     [self refreshImage:nil];
 }
 
@@ -60,6 +66,17 @@
     return _imageView;
 }
 
+-(UIButton *)button{
+    if (_button) return _button;
+    _button = [UIButton buttonWithType:UIButtonTypeCustom];
+    _button.frame = CGRectMake(0, self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height, self.view.bounds.size.width, 320);
+    [_button setBackgroundColor:[UIColor colorWithRed:0.84 green:0.85 blue:0.86 alpha:0.9f]];
+    _button.imageView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    _button.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    _button.imageView.clipsToBounds = YES;
+    return _button;
+}
+
 
 #pragma mark - example
 
@@ -69,6 +86,7 @@
     self.countRefresh += 1;
     
     [self.imageView setImageWithProgressIndicatorAndURL:[NSURL URLWithString:url]];
+//    [self.button setImageWithProgressIndicatorForState:UIControlStateNormal withURL:[NSURL URLWithString:url]];
 }
 
 
