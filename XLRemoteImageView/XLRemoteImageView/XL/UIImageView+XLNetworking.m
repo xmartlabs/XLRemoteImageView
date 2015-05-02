@@ -47,7 +47,7 @@
     [self cancelImageRequestOperation];
     
     // get AFNetworking UIImageView cache
-    AFImageCache * cache =  (AFImageCache *)objc_msgSend([self class], @selector(sharedImageCache));
+    AFImageCache * cache =  (AFImageCache *)((id (*)(id, SEL))objc_msgSend)([self class], @selector(sharedImageCache));
     // try to get the image from cache
     UIImage * cachedImage = [cache cachedImageForRequest:urlRequest];
     if (cachedImage) {
@@ -100,7 +100,7 @@
         // get the NSoperationQueue associated With UIImageView class
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
-        NSOperationQueue * operationQueue =  (NSOperationQueue *)objc_msgSend([self class], @selector(af_sharedImageRequestOperationQueue));
+        NSOperationQueue * operationQueue =  (NSOperationQueue *)((id (*)(id, SEL))objc_msgSend)([self class], @selector(af_sharedImageRequestOperationQueue));
         #pragma clang diagnostic pop
         [operationQueue addOperation:self.af_imageRequestOperation];
     }
