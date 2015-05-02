@@ -13,9 +13,7 @@ Installation
 
 The easiest way to integrate XLRemoteImageView in your projects is via [CocoaPods](http://cocoapods.org). 
 
-1. Add the following line in the project's Podfile file.
-
-`pod 'XLRemoteImageView', '~> 2.0'`
+1. Add the following line in the project's Podfile file: `pod 'XLRemoteImageView', '~> 2.0'`
 
 2. Run the command `pod install` from the Podfile folder directory.
 
@@ -118,13 +116,14 @@ Version 1.0.0 (cocoaPod)
 * Tested on ios 5 & 6.
 * AFNetworking ~> 1.3 support. 
 
+Author
+-----------------
 
+[Martin Barreto](https://www.github.com/mtnBarreto "Martin Barreto Github") ([@mtnBarreto](http://twitter.com/mtnBarreto "@mtnBarreto"))
 
 Contact
 --------
 
-If you are using XLRemoteImageView in your project and have any suggestion or question:
+Any suggestion or question? Please create a Github issue or reach us out.
 
-Martin Barreto, <martin@xmartlabs.com>
-
-[@Xmartlabs](http://www.xmartlabs.com)
+[xmartlabs.com](http://xmartlabs.com) ([@xmartlabs](http://twitter.com/xmartlabs "@xmartlabs"))
