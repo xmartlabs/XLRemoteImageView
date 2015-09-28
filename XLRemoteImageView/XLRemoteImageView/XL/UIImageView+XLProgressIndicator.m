@@ -15,7 +15,7 @@ static char kXLImageProgressIndicatorKey;
 
 @interface UIImageView (_XLProgressIndicator)
 
-@property (readwrite, nonatomic, strong, setter = xl_setProgressIndicatorView:) XLCircleProgressIndicator *xl_progressIndicatorView;
+@property (readwrite, nonatomic, strong, setter=xl_setProgressIndicatorView:) XLCircleProgressIndicator *xl_progressIndicatorView;
 
 @end
 
@@ -27,21 +27,18 @@ static char kXLImageProgressIndicatorKey;
 
 @implementation UIImageView (XLProgressIndicator)
 
--(XLCircleProgressIndicator *)progressIndicatorView
-{
+- (XLCircleProgressIndicator *)progressIndicatorView {
     return [self xl_progressIndicatorView];
 }
 
-
--(void)xl_setProgressIndicatorView:(XLCircleProgressIndicator *)xl_progressIndicatorView
-{
+- (void)xl_setProgressIndicatorView:(XLCircleProgressIndicator *)xl_progressIndicatorView {
     objc_setAssociatedObject(self, &kXLImageProgressIndicatorKey, xl_progressIndicatorView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
--(XLCircleProgressIndicator *)xl_progressIndicatorView
-{
-    XLCircleProgressIndicator * progressIndicator = (XLCircleProgressIndicator *)objc_getAssociatedObject(self, &kXLImageProgressIndicatorKey);
-    if (progressIndicator) return progressIndicator;
+- (XLCircleProgressIndicator *)xl_progressIndicatorView {
+    XLCircleProgressIndicator *progressIndicator = (XLCircleProgressIndicator *)objc_getAssociatedObject(self, &kXLImageProgressIndicatorKey);
+    if (progressIndicator)
+        return progressIndicator;
     progressIndicator = [[XLCircleProgressIndicator alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
     progressIndicator.center = CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2);
     progressIndicator.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
@@ -49,40 +46,34 @@ static char kXLImageProgressIndicatorKey;
     return progressIndicator;
 }
 
-
--(void)setImageWithProgressIndicatorAndURL:(NSURL *)url
-{
+- (void)setImageWithProgressIndicatorAndURL:(NSURL *)url {
     [self setImageWithProgressIndicatorAndURL:url placeholderImage:nil];
 }
 
--(void)setImageWithProgressIndicatorAndURL:(NSURL *)url indicatorCenter:(CGPoint)indicatorCenter
-{
+- (void)setImageWithProgressIndicatorAndURL:(NSURL *)url indicatorCenter:(CGPoint)indicatorCenter {
     [self setImageWithProgressIndicatorAndURL:url placeholderImage:Nil imageDidAppearBlock:nil progressIndicatorCenterPoint:indicatorCenter];
 }
 
--(void)setImageWithProgressIndicatorAndURL:(NSURL *)url
-                          placeholderImage:(UIImage *)placeholderImage
-{
+- (void)setImageWithProgressIndicatorAndURL:(NSURL *)url
+                           placeholderImage:(UIImage *)placeholderImage {
     [self setImageWithProgressIndicatorAndURL:url placeholderImage:placeholderImage imageDidAppearBlock:nil progressIndicatorCenterPoint:self.center];
 }
 
 - (void)setImageWithProgressIndicatorAndURL:(NSURL *)url placeholderImage:(UIImage *)placeholderImage
-                        imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
-{
+                        imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock {
     [self setImageWithProgressIndicatorAndURL:url
                              placeholderImage:placeholderImage
                           imageDidAppearBlock:imageDidAppearBlock
                  progressIndicatorCenterPoint:CGPointMake(CGRectGetWidth(self.bounds) / 2, CGRectGetHeight(self.bounds) / 2)];
 }
 
--(void)setImageWithProgressIndicatorAndURL:(NSURL *)url
-                          placeholderImage:(UIImage *)placeholderImage
-                       imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
-              progressIndicatorCenterPoint:(CGPoint)indicatorCenter
-{
+- (void)setImageWithProgressIndicatorAndURL:(NSURL *)url
+                           placeholderImage:(UIImage *)placeholderImage
+                        imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
+               progressIndicatorCenterPoint:(CGPoint)indicatorCenter {
     [self setImage:nil];
     [self.xl_progressIndicatorView setProgressValue:0.0f];
-    if (![self.xl_progressIndicatorView superview]){
+    if (![self.xl_progressIndicatorView superview]) {
         [self addSubview:self.xl_progressIndicatorView];
     }
     //self.xl_progressIndicatorView.center = indicatorCenter;
@@ -90,21 +81,28 @@ static char kXLImageProgressIndicatorKey;
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
     __typeof__(self) __weak weakSelf = self;
     [self setImageWithURLRequest:request
-                placeholderImage:placeholderImage
-                         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-                             [weakSelf.xl_progressIndicatorView removeFromSuperview];
-                             weakSelf.image = image;
-                             if (imageDidAppearBlock){
-                                 imageDidAppearBlock(weakSelf);
-                             }
-                         }
-                         failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
-                             [weakSelf.xl_progressIndicatorView setProgressValue:0.0f];
-                         }
-           downloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
-               float newValue = ((float)totalBytesRead / totalBytesExpectedToRead);
-               [weakSelf.xl_progressIndicatorView setProgressValue:newValue];
-           }];
+        placeholderImage:placeholderImage
+        success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+          [weakSelf.xl_progressIndicatorView removeFromSuperview];
+          dispatch_async(dispatch_get_main_queue(), ^(void) {
+            weakSelf.image = image;
+          });
+          if (imageDidAppearBlock) {
+              imageDidAppearBlock(weakSelf);
+          }
+        }
+        failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+          dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [weakSelf.xl_progressIndicatorView setProgressValue:0.0f];
+            [weakSelf.xl_progressIndicatorView removeFromSuperview];
+          });
+        }
+        downloadProgressBlock:^(NSUInteger bytesRead, long long totalBytesRead, long long totalBytesExpectedToRead) {
+          float newValue = ((float)totalBytesRead / totalBytesExpectedToRead);
+          dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [weakSelf.xl_progressIndicatorView setProgressValue:newValue];
+          });
+        }];
 }
 
 @end
