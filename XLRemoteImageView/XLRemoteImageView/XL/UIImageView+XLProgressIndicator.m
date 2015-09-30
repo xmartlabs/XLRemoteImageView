@@ -71,11 +71,13 @@ static char kXLImageProgressIndicatorKey;
                            placeholderImage:(UIImage *)placeholderImage
                         imageDidAppearBlock:(void (^)(UIImageView *))imageDidAppearBlock
                progressIndicatorCenterPoint:(CGPoint)indicatorCenter {
-    [self setImage:nil];
-    [self.xl_progressIndicatorView setProgressValue:0.0f];
-    if (![self.xl_progressIndicatorView superview]) {
-        [self addSubview:self.xl_progressIndicatorView];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+      [self setImage:nil];
+      [self.xl_progressIndicatorView setProgressValue:0.0f];
+      if (![self.xl_progressIndicatorView superview]) {
+          [self addSubview:self.xl_progressIndicatorView];
+      }
+    });
     //self.xl_progressIndicatorView.center = indicatorCenter;
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -83,8 +85,8 @@ static char kXLImageProgressIndicatorKey;
     [self setImageWithURLRequest:request
         placeholderImage:placeholderImage
         success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-          [weakSelf.xl_progressIndicatorView removeFromSuperview];
           dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [weakSelf.xl_progressIndicatorView removeFromSuperview];
             weakSelf.image = image;
           });
           if (imageDidAppearBlock) {
