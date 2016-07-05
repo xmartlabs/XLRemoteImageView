@@ -3,8 +3,8 @@ Pod::Spec.new do |s|
   s.version  = '2.0.0'
   s.license  = 'MIT'
   s.summary  = 'UIImageView categories that show a progress indicator while the image is being downloaded.'
-  s.description = <<-DESC 
-                    It uses the same NSCache and NSOperation objects used in UIImageView+AFNetworking category. 
+  s.description = <<-DESC
+                    It uses the same NSCache and NSOperation objects used in UIImageView+AFNetworking category.
                     It looks like Instagram loading indicator.
                   DESC
   s.homepage = 'https://github.com/xmartlabs/XLRemoteImageView'

@@ -45,53 +45,59 @@
 
 {
     [self cancelImageRequestOperation];
-    
+
     // get AFNetworking UIImageView cache
-    AFImageCache * cache =  (AFImageCache *)((id (*)(id, SEL))objc_msgSend)([self class], @selector(sharedImageCache));
+    AFImageCache *cache = (AFImageCache *)((id (*)(id, SEL))objc_msgSend)([self class], @selector(sharedImageCache));
     // try to get the image from cache
-    UIImage * cachedImage = [cache cachedImageForRequest:urlRequest];
+    UIImage *cachedImage = [cache cachedImageForRequest:urlRequest];
     if (cachedImage) {
         if (success) {
             success(nil, nil, cachedImage);
         } else {
-            self.image = cachedImage;
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+              self.image = cachedImage;
+            });
         }
-        
+
         self.af_imageRequestOperation = nil;
     } else {
         if (placeholderImage) {
-            self.image = placeholderImage;
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+              self.image = placeholderImage;
+            });
         }
-        
+
         __weak __typeof(self) weakSelf = self;
         self.af_imageRequestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlRequest];
         self.af_imageRequestOperation.responseSerializer = self.imageResponseSerializer;
         [self.af_imageRequestOperation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            __strong __typeof(weakSelf) strongSelf = weakSelf;
-            if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
-                if (success) {
-                    success(urlRequest, operation.response, responseObject);
-                } else if (responseObject) {
+          __strong __typeof(weakSelf) strongSelf = weakSelf;
+          if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
+              if (success) {
+                  success(urlRequest, operation.response, responseObject);
+              } else if (responseObject) {
+                  dispatch_async(dispatch_get_main_queue(), ^(void) {
                     strongSelf.image = responseObject;
-                }
-                
-                if (operation == strongSelf.af_imageRequestOperation){
-                    strongSelf.af_imageRequestOperation = nil;
-                }
-            }
-            // cache the image recently fetched.
-            [cache cacheImage:responseObject forRequest:urlRequest];
+                  });
+              }
+
+              if (operation == strongSelf.af_imageRequestOperation) {
+                  strongSelf.af_imageRequestOperation = nil;
+              }
+          }
+          // cache the image recently fetched.
+          [cache cacheImage:responseObject forRequest:urlRequest];
         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            __strong __typeof(weakSelf)strongSelf = weakSelf;
-            if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
-                if (failure) {
-                    failure(urlRequest, operation.response, error);
-                }
-                
-                if (operation == strongSelf.af_imageRequestOperation){
-                    strongSelf.af_imageRequestOperation = nil;
-                }
-            }
+          __strong __typeof(weakSelf) strongSelf = weakSelf;
+          if ([[urlRequest URL] isEqual:[strongSelf.af_imageRequestOperation.request URL]]) {
+              if (failure) {
+                  failure(urlRequest, operation.response, error);
+              }
+
+              if (operation == strongSelf.af_imageRequestOperation) {
+                  strongSelf.af_imageRequestOperation = nil;
+              }
+          }
         }];
         
         if (downloadProgressBlock){
